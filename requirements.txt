@@ -1,0 +1,8 @@
+# KERN — dependencias de Python (instalar en .venv)
+# Runtime
+flask>=3.1
+waitress>=3.0
+# Compilar el .exe (build.bat)
+pyinstaller>=6.22
+# Regenerar el ícono del programa (opcional)
+pillow>=11.0

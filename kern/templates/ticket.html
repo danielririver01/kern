@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Ticket #{{ '%06d' % op.id }} — KERN</title>
+  <style>
+    @page { size: 80mm auto; margin: 3mm; }
+    * { box-sizing: border-box; }
+    body {
+      width: 74mm;
+      margin: 0 auto;
+      padding: 2mm 0;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 12px;
+      line-height: 1.45;
+      color: #000;
+      background: #fff;
+    }
+    .c { text-align: center; }
+    .b { font-weight: 700; }
+    .sep { border-top: 1px dashed #000; margin: 6px 0; }
+    .fila { display: flex; justify-content: space-between; gap: 8px; }
+    .pie { margin-top: 8px; text-align: center; }
+  </style>
+</head>
+<body>
+  {% if negocio and negocio.nombre %}<div class="c b">{{ negocio.nombre }}</div>{% endif %}
+  {% if negocio and negocio.nit %}<div class="c">NIT {{ negocio.nit }}</div>{% endif %}
+  {% if negocio and negocio.telefono %}<div class="c">Tel {{ negocio.telefono }}</div>{% endif %}
+  {% if negocio and negocio.direccion %}<div class="c">{{ negocio.direccion }}</div>{% endif %}
+
+  <div class="sep"></div>
+  <div class="c b">TICKET #{{ '%06d' % op.id }}</div>
+  <div class="c">{{ op.creado_en.strftime('%d/%m/%Y %H:%M') }}</div>
+  <div class="sep"></div>
+
+  <div class="c">{{ op.cliente }}</div>
+  <div class="c">{{ op.vehiculo }}</div>
+  <div class="sep"></div>
+
+  <div class="fila"><span>Subtotal</span><span>{{ op.precio | cop }}</span></div>
+  <div class="fila b"><span>TOTAL</span><span>{{ op.precio | cop }}</span></div>
+
+  <div class="sep"></div>
+  {% if negocio and negocio.mensaje_final %}<div class="pie">{{ negocio.mensaje_final }}</div>{% endif %}
+
+  <script>
+    window.addEventListener("load", function () {
+      setTimeout(function () { window.print(); }, 300);
+    });
+    window.addEventListener("afterprint", function () { window.close(); });
+  </script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+{% with mensajes = get_flashed_messages(with_categories=true) %}
+  {% for categoria, mensaje in mensajes %}
+    <div data-flash="{{ categoria }}" class="mb-4 flex items-center gap-3 rounded-xl border px-4 py-3 text-sm font-medium backdrop-blur
+      {% if categoria == 'error' %} border-fail/40 bg-fail/10 text-fail
+      {% elif categoria == 'exito' %} border-ok/40 bg-ok/10 text-ok
+      {% else %} border-amber/40 bg-amber/10 text-amber {% endif %}">
+      <span class="h-2 w-2 shrink-0 rounded-full bg-current"></span>
+      {{ mensaje }}
+    </div>
+  {% endfor %}
+{% endwith %}

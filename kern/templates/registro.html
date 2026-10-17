@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}KERN — Registro del primer usuario{% endblock %}
+
+{% block body %}
+<div class="glow-login grid min-h-screen place-items-center bg-ink px-4 py-10">
+  <div class="w-full max-w-md">
+
+    <div class="mb-8 text-center">
+      <span class="mx-auto grid h-16 w-16 place-items-center rounded-2xl bg-amber text-4xl font-black text-ink shadow-[0_20px_45px_-15px_rgba(245,185,66,0.65)]">K</span>
+      <h1 class="mt-5 text-4xl font-semibold tracking-tight text-text">KERN</h1>
+      <p class="mt-1.5 text-sm text-muted">Primer usuario del sistema</p>
+    </div>
+
+    <div class="rounded-3xl border border-line bg-card/80 p-8 shadow-[0_30px_90px_-30px_rgba(0,0,0,0.95)] backdrop-blur">
+      {% include "_flashes.html" %}
+
+      <div class="mb-5 flex items-start gap-3 rounded-xl border border-amber/30 bg-amber/10 px-4 py-3 text-sm text-amber">
+        <span class="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-amber"></span>
+        <p>Crea el <strong>primer usuario</strong>. Después de esto, el registro
+        se cerrará y solo se podrá iniciar sesión.</p>
+      </div>
+
+      <form method="post" id="form-registro" autocomplete="off" class="space-y-5">
+        <div>
+          <label for="nombre" class="mb-2 block text-xs font-medium uppercase tracking-[0.18em] text-muted">Nombre de usuario</label>
+          <input id="nombre" name="nombre" required maxlength="80" autofocus
+                 autocomplete="off"
+                 value="{{ nombre or '' }}" placeholder="Ej. Kaly"
+                 class="w-full rounded-xl border border-line bg-raised px-4 py-3.5 text-text placeholder:text-muted/45 transition focus:border-amber focus:outline-none focus:ring-2 focus:ring-amber/25">
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label for="pin" class="mb-2 block text-xs font-medium uppercase tracking-[0.18em] text-muted">PIN (4 dígitos)</label>
+            <input id="pin" name="pin" type="password" required inputmode="numeric"
+                   autocomplete="off"
+                   data-pin maxlength="4" placeholder="••••"
+                   class="w-full rounded-xl border border-line bg-raised px-4 py-3.5 text-center font-mono text-2xl tracking-[0.45em] text-text placeholder:text-muted/35 transition focus:border-amber focus:outline-none focus:ring-2 focus:ring-amber/25">
+          </div>
+          <div>
+            <label for="pin2" class="mb-2 block text-xs font-medium uppercase tracking-[0.18em] text-muted">Repite el PIN</label>
+            <input id="pin2" name="pin2" type="password" required inputmode="numeric"
+                   autocomplete="off"
+                   data-pin maxlength="4" placeholder="••••"
+                   class="w-full rounded-xl border border-line bg-raised px-4 py-3.5 text-center font-mono text-2xl tracking-[0.45em] text-text placeholder:text-muted/35 transition focus:border-amber focus:outline-none focus:ring-2 focus:ring-amber/25">
+          </div>
+        </div>
+
+        <button type="submit"
+                class="w-full rounded-xl bg-amber px-4 py-3.5 font-semibold text-ink transition hover:brightness-110 focus-visible:outline-2 focus-visible:ring-2 focus-visible:ring-amber/60 focus-visible:outline-none">
+          Crear usuario
+        </button>
+      </form>
+    </div>
+
+    <p class="mt-6 text-center text-[11px] uppercase tracking-[0.25em] text-muted/45">KERN · Sistema de operaciones</p>
+  </div>
+</div>
+{% endblock %}

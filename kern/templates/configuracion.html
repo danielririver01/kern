@@ -1,0 +1,161 @@
+{% extends "base.html" %}
+{% block title %}KERN — Configuración{% endblock %}
+
+{% block content %}
+<h1 class="mb-6 text-2xl font-semibold tracking-tight text-text">Configuración</h1>
+
+<div class="grid gap-6 lg:grid-cols-2">
+
+  <!-- Datos del negocio -->
+  <section class="rounded-2xl border border-line bg-card p-6 shadow-[0_24px_70px_-30px_rgba(0,0,0,0.9)]">
+    <div class="flex items-center justify-between">
+      <h2 class="text-xs font-medium uppercase tracking-[0.18em] text-muted">Datos del negocio</h2>
+      <span class="grid h-9 w-9 place-items-center rounded-xl bg-amber/15 text-sm font-black text-amber">K</span>
+    </div>
+
+    <form id="form-config" method="post" class="mt-5 space-y-5">
+      <div>
+        <label for="pais" class="mb-2 block text-xs font-medium uppercase tracking-[0.18em] text-muted">País</label>
+        <input id="pais" name="pais" maxlength="60" value="{{ negocio.pais }}"
+               class="w-full rounded-xl border border-line bg-raised px-4 py-3.5 text-text placeholder:text-muted/45 transition focus:border-amber focus:outline-none focus:ring-2 focus:ring-amber/25">
+        <p class="mt-1.5 text-xs text-muted/60">Ajusta el campo fiscal al formato local.</p>
+      </div>
+
+      <div>
+        <label for="nombre" class="mb-2 block text-xs font-medium uppercase tracking-[0.18em] text-muted">Nombre del negocio</label>
+        <input id="nombre" name="nombre" required maxlength="120" value="{{ negocio.nombre }}"
+               placeholder="Ej. Taller Rivera"
+               class="w-full rounded-xl border border-line bg-raised px-4 py-3.5 text-text placeholder:text-muted/45 transition focus:border-amber focus:outline-none focus:ring-2 focus:ring-amber/25">
+        <p class="mt-1.5 text-xs text-muted/60">Aparece en la cabecera del ticket.</p>
+      </div>
+
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div>
+          <label for="nit" class="mb-2 block text-xs font-medium uppercase tracking-[0.18em] text-muted">NIT o identificación</label>
+          <input id="nit" name="nit" maxlength="40" value="{{ negocio.nit }}"
+                 placeholder="900123456-7"
+                 class="w-full rounded-xl border border-line bg-raised px-4 py-3.5 font-mono text-text placeholder:text-muted/45 transition focus:border-amber focus:outline-none focus:ring-2 focus:ring-amber/25">
+          <p class="mt-1.5 text-xs text-muted/60">En Colombia: NIT con dígito de verificación.</p>
+        </div>
+        <div>
+          <label for="telefono" class="mb-2 block text-xs font-medium uppercase tracking-[0.18em] text-muted">Teléfono</label>
+          <input id="telefono" name="telefono" maxlength="40" value="{{ negocio.telefono }}"
+                 placeholder="300 123 4567"
+                 class="w-full rounded-xl border border-line bg-raised px-4 py-3.5 font-mono text-text placeholder:text-muted/45 transition focus:border-amber focus:outline-none focus:ring-2 focus:ring-amber/25">
+          <p class="mt-1.5 text-xs text-muted/60">Se imprime bajo el nombre si lo configuras.</p>
+        </div>
+      </div>
+
+      <div>
+        <label for="direccion" class="mb-2 block text-xs font-medium uppercase tracking-[0.18em] text-muted">Dirección</label>
+        <input id="direccion" name="direccion" maxlength="160" value="{{ negocio.direccion }}"
+               placeholder="Cra. 1 # 23-45, Ciudad"
+               class="w-full rounded-xl border border-line bg-raised px-4 py-3.5 text-text placeholder:text-muted/45 transition focus:border-amber focus:outline-none focus:ring-2 focus:ring-amber/25">
+        <p class="mt-1.5 text-xs text-muted/60">Dirección que aparece en el ticket.</p>
+      </div>
+
+      <div>
+        <label for="mensaje_final" class="mb-2 block text-xs font-medium uppercase tracking-[0.18em] text-muted">Mensaje final del ticket</label>
+        <input id="mensaje_final" name="mensaje_final" maxlength="200" value="{{ negocio.mensaje_final }}"
+               placeholder="Muchas gracias por su compra"
+               class="w-full rounded-xl border border-line bg-raised px-4 py-3.5 text-text placeholder:text-muted/45 transition focus:border-amber focus:outline-none focus:ring-2 focus:ring-amber/25">
+        <p class="mt-1.5 text-xs text-muted/60">Se imprime al final de cada ticket.</p>
+      </div>
+
+      <div class="flex justify-end pt-2">
+        <button type="submit"
+                class="rounded-xl bg-amber px-6 py-3 text-sm font-semibold text-ink transition hover:brightness-110 focus-visible:outline-2 focus-visible:ring-2 focus-visible:ring-amber/60 focus-visible:outline-none">
+          Guardar
+        </button>
+      </div>
+    </form>
+  </section>
+
+  <!-- Vista previa del ticket -->
+  <section class="lg:sticky lg:top-6 lg:self-start">
+    <span class="inline-flex items-center gap-2 rounded-full bg-ok/15 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-ok">
+      <span class="h-2 w-2 rounded-full bg-ok"></span>Vista previa del ticket
+    </span>
+
+    <div class="mt-3 rounded-2xl border border-line bg-card p-6 shadow-[0_24px_70px_-30px_rgba(0,0,0,0.9)]">
+      <div class="mx-auto w-full max-w-[320px] rounded-lg bg-[#f7f5f0] px-6 py-6 font-mono text-[12px] leading-[1.5] text-black shadow-[0_24px_60px_-20px_rgba(0,0,0,0.9)]">
+        <p id="tp-nombre" class="text-center text-[14px] font-bold">Tu negocio</p>
+        <p id="tp-nit" class="hidden text-center">NIT —</p>
+        <p id="tp-telefono" class="hidden text-center">Tel —</p>
+        <p id="tp-direccion" class="hidden text-center"></p>
+
+        <div class="my-3 border-t border-dashed border-black/40"></div>
+        <p class="text-center font-bold">TICKET #000001</p>
+        <p id="tp-fecha" class="text-center"></p>
+        <div class="my-3 border-t border-dashed border-black/40"></div>
+
+        <p>María Gómez</p>
+        <p>Renault Logan — ABC123</p>
+        <p class="text-right">$95.500,00</p>
+
+        <div class="my-3 border-t border-dashed border-black/40"></div>
+        <p class="flex justify-between"><span>Subtotal</span><span>$ 95.500,00</span></p>
+        <p class="flex justify-between font-bold"><span>TOTAL</span><span>$ 95.500,00</span></p>
+
+        <div class="my-3 border-t border-dashed border-black/40"></div>
+        <p id="tp-mensaje" class="text-center">Muchas gracias por su compra</p>
+      </div>
+    </div>
+
+    <p class="mt-3 text-xs text-muted/60">Se actualiza en tiempo real mientras editas.</p>
+  </section>
+</div>
+
+<!-- Impresora térmica USB -->
+<section class="mt-6 rounded-2xl border border-line bg-card p-6 shadow-[0_24px_70px_-30px_rgba(0,0,0,0.9)]">
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <div class="flex items-center gap-3">
+      <span class="grid h-9 w-9 place-items-center rounded-xl bg-amber/15 text-amber">
+        <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+      </span>
+      <h2 class="text-xs font-medium uppercase tracking-[0.18em] text-muted">Impresora térmica (USB)</h2>
+    </div>
+    <span id="printer-status" class="rounded-full bg-raised px-3 py-1 text-xs font-semibold text-muted">Sin conexión</span>
+  </div>
+
+  <div class="mt-5 grid gap-6 lg:grid-cols-2">
+    <div>
+      <p id="printer-nota" class="text-sm leading-relaxed text-muted">
+        Conecta la impresora por USB y pulsa <strong class="text-text">Conectar impresora</strong>.
+        Una vez conectada, el ícono de imprimir del historial saca el ticket
+        <strong class="text-text">directo, sin cuadros de diálogo</strong>.
+      </p>
+      <p class="mt-3 text-xs leading-relaxed text-muted/60">
+        Requiere Chrome o Edge. El permiso se guarda: la próxima vez se reconecta sola.
+        Si la impresora quedó ocupada por un driver de Windows, usa el ícono normal
+        (abre el cuadro de impresión de siempre).
+      </p>
+    </div>
+
+    <div class="space-y-5">
+      <div>
+        <span class="mb-2 block text-xs font-medium uppercase tracking-[0.18em] text-muted">Ancho del papel</span>
+        <div class="inline-flex rounded-xl border border-line bg-raised p-1">
+          <button type="button" data-ancho="58">58 mm</button>
+          <button type="button" data-ancho="80">80 mm</button>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap gap-3">
+        <button type="button" id="btn-conectar"
+                class="rounded-xl bg-amber px-4 py-2.5 text-sm font-semibold text-ink transition hover:brightness-110 focus-visible:outline-2 focus-visible:ring-2 focus-visible:ring-amber/60 focus-visible:outline-none disabled:opacity-40 disabled:hover:brightness-100">
+          Conectar impresora
+        </button>
+        <button type="button" id="btn-prueba" disabled
+                class="rounded-xl border border-line px-4 py-2.5 text-sm font-medium text-muted transition hover:border-amber hover:text-amber focus-visible:outline-2 focus-visible:ring-2 focus-visible:ring-amber focus-visible:outline-none disabled:opacity-40 disabled:hover:border-line disabled:hover:text-muted">
+          Imprimir prueba
+        </button>
+        <button type="button" id="btn-desconectar" disabled
+                class="rounded-xl border border-line px-4 py-2.5 text-sm font-medium text-muted transition hover:border-fail hover:text-fail focus-visible:outline-2 focus-visible:ring-2 focus-visible:ring-fail focus-visible:outline-none disabled:opacity-40 disabled:hover:border-line disabled:hover:text-muted">
+          Desconectar
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

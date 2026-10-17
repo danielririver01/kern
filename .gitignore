@@ -1,0 +1,34 @@
+# ---------------------------------------------------------------
+# KERN — .gitignore
+# ---------------------------------------------------------------
+
+# Entorno virtual y dependencias de Node
+.venv/
+node_modules/
+
+# Build de PyInstaller (el .exe compilado se regenera con build.bat)
+build/
+dist/
+KERN.spec
+
+# Base de datos local — ¡datos del negocio! Nunca se sube a GitHub.
+# (Respáldala copiando kern.db a un USB o nube)
+kern.db
+kern.db-wal
+kern.db-shm
+
+# Capturas de pantalla de pruebas (raíz del proyecto)
+/*.png
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Editores y sistema
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Logs de pruebas automaticas del navegador (Playwright MCP)
+.playwright-mcp/

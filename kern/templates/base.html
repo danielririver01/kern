@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}KERN{% endblock %}</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23f5b942'/><text x='50' y='73' font-size='64' font-family='Arial' font-weight='900' fill='%230d0d0d' text-anchor='middle'>K</text></svg>">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body class="min-h-screen font-sans antialiased">
+  {% block body %}
+  <header class="sticky top-0 z-40 border-b border-line bg-ink/80 backdrop-blur">
+    <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+      <a href="{{ url_for('auth.index') }}" class="flex items-center gap-3">
+        <span class="grid h-9 w-9 place-items-center rounded-xl bg-amber text-lg font-black text-ink">K</span>
+        <span class="text-base font-semibold tracking-[0.3em] text-text">KERN</span>
+      </a>
+      {% if session.get('usuario') %}
+      <nav class="flex items-center gap-4 text-sm">
+        <span class="text-muted">Hola, <strong class="font-medium text-amber">{{ session['usuario'] }}</strong></span>
+        <a href="{{ url_for('configuracion.pantalla') }}"
+           class="flex items-center gap-2 rounded-lg border border-line px-4 py-2 text-sm font-medium text-muted transition hover:border-amber hover:text-amber focus-visible:outline-2 focus-visible:ring-2 focus-visible:ring-amber focus-visible:outline-none">
+          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+          Configuración
+        </a>
+        <form method="post" action="{{ url_for('auth.logout') }}">
+          <button type="submit"
+                  class="rounded-lg border border-line px-4 py-2 text-sm font-medium text-muted transition hover:border-amber hover:text-amber focus-visible:outline-2 focus-visible:ring-2 focus-visible:ring-amber focus-visible:outline-none">
+            Salir
+          </button>
+        </form>
+      </nav>
+      {% endif %}
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-6xl px-6 py-8">
+    {% include "_flashes.html" %}
+    {% block content %}{% endblock %}
+  </main>
+  {% endblock %}
+
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/printer.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+{
+  "name": "kern",
+  "private": true,
+  "scripts": {
+    "build:css": "tailwindcss -i kern/static/src/input.css -o kern/static/css/styles.css --minify",
+    "watch:css": "tailwindcss -i kern/static/src/input.css -o kern/static/css/styles.css --watch"
+  },
+  "devDependencies": {
+    "@fontsource-variable/geist-mono": "^5.3.0",
+    "@fontsource-variable/onest": "^5.3.1",
+    "@tailwindcss/cli": "^4.3.3"
+  }
+}
