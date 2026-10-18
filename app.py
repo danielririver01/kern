@@ -1,8 +1,30 @@
+import logging
 import os
 import socket
 import sys
 import threading
 import webbrowser
+from logging.handlers import RotatingFileHandler
+
+from kern.db import CARPETA_BASE
+
+# Registro de errores junto a kern.db: como el .exe no tiene consola, cualquier
+# fallo queda escrito en kern.log para poder diagnosticarlo.
+try:
+    _archivo_log = RotatingFileHandler(
+        os.path.join(CARPETA_BASE, "kern.log"),
+        maxBytes=1_000_000,
+        backupCount=1,
+        encoding="utf-8",
+    )
+    _archivo_log.setFormatter(
+        logging.Formatter("%(asctime)s %(levelname)s %(name)s: %(message)s")
+    )
+    logging.getLogger().addHandler(_archivo_log)
+    logging.getLogger().setLevel(logging.INFO)
+except OSError:
+    # Carpeta sin permisos de escritura: seguimos sin registro
+    pass
 
 from kern import create_app
 

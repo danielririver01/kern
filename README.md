@@ -99,6 +99,8 @@ kern/
 - Python 3.11, Flask, Waitress, Tailwind CSS v4, PyInstaller.
 - `SECRET_KEY` puede fijarse por variable de entorno; si no, usa la de
   desarrollo (suficiente para uso local).
+- Si algo falla, junto al `.exe` se genera **`kern.log`** con el detalle del
+  error (la app no tiene consola, así el fallo queda escrito).
 - WebUSB requiere Chrome/Edge y `http://localhost` (no funciona desde
   `file://`). Si Windows tiene un driver instalado para la impresora, puede
   bloquear la impresión directa: en ese caso usa el ícono normal (diálogo).

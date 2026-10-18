@@ -17,6 +17,9 @@ kern.db
 kern.db-wal
 kern.db-shm
 
+# Registro de errores de la app
+kern.log
+
 # Capturas de pantalla de pruebas (raíz del proyecto)
 /*.png
 

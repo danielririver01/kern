@@ -15,7 +15,7 @@ echo [2/3] Empaquetando KERN.exe (onefile, sin consola)...
   --icon "kern\static\img\kern.ico" ^
   --add-data "kern\templates;kern\templates" ^
   --add-data "kern\static;kern\static" ^
-  --add-data "kern\schema.sql;kern\schema.sql" ^
+  --add-data "kern\schema.sql;kern" ^
   app.py
 if errorlevel 1 goto error
 
